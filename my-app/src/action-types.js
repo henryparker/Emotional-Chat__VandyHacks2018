@@ -1,1 +1,2 @@
 export const ADD_EMOTION = "ADD_EMOTION";
+export const RECEIVED_EMOTION = "RECEIVED_EMOTION";

@@ -6,13 +6,12 @@ import $ from 'jquery'
 import axios from 'axios';
 import MessageList from "./MessageList";
 import MessageForm from "./MessageForm";
-import { startAddEmotion } from "./actions/pureEmotion";
-import  {receivedEmotion}  from './actions/receivedEmotion';
-import _ from 'lodash';
-import {Bar, Radar, Polar} from 'react-chartjs-2';
+import { startAddEmotion } from "../actions/pureEmotion";
+const fs = require('fs');
+
 // var fs = require('fs');
 
-class App extends Component {
+class WebcamCapture extends Component {
   
   constructor(props) {
     super(props)
@@ -23,7 +22,7 @@ class App extends Component {
       img : "",
     }
   }
-  
+
   componentDidMount = () => {
     this.getToken()
       .then(this.createChatClient)
@@ -93,22 +92,10 @@ class App extends Component {
       this.state.channel.sendMessage(text)
     }
   }
-  isJson = (str) =>{
-    try {
-        JSON.parse(str);
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
+
   configureChannelEvents = (channel) => {
     channel.on('messageAdded', ({ author, body }) => {
       this.addMessage({ author, body })
-      if(this.isJson(body)){
-        let newObject = JSON.parse(body);
-        this.props.receivedEmotion(newObject)
-
-      }
     })
 
     channel.on('memberJoined', (member) => {
@@ -151,72 +138,30 @@ class App extends Component {
   }
     
     };
-    
    
     render() {
-      console.log("props",this.props);
-      let emotionBarData = !_.isEmpty(this.props.receivedEmotionState) ?  {
-        labels: ["anger","contempt","disgust","fear","happiness","neutral","sadness"],
-        datasets: [{
-            label:'percent',
-            data: [this.props.receivedEmotionState.anger,this.props.receivedEmotionState.contempt,
-              this.props.receivedEmotionState.disgust,this.props.receivedEmotionState.fear,
-              this.props.receivedEmotionState.happiness,this.props.receivedEmotionState.neutral,
-              this.props.receivedEmotionState.sadness],
-            backgroundColor: 'rgb(255,99,71)'
-        }] } : {};
-
-    let emotionBarChart = !_.isEmpty(emotionBarData) ?<div><h3>Emotions</h3> <Bar data={emotionBarData} options={{
-       responsive:true,
-       maintainAspectRatio:true,
-       legend:{
-         labels:{fontSize:50}
-         
-       },
-        scales: {
-            yAxes: [{
-                ticks: {
-                  fontSize: 40,
-                    beginAtZero:true
-                    
-                }
-            }],
-            xAxes:[{ticks:{fontSize:35}}]
-        }
-    }}></Bar><br/></div> : <h1></h1>;
-      // const videoConstraints = {
-      //   width: 1280,
-      //   height: 720,
-      //   facingMode: "user"
+      const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: "user"
       
-      // };
+      };
       // let imgg = this.state.img != "" ? <img src={this.state.img}></img>:<span></span>;
       return (
         <div>
-        <div className="div-messege">
-        
-          {/* <Webcam
+
+          <Webcam
             audio={false}
             // height={350}
             ref={this.setRef}
             screenshotFormat="image/jpeg"
             // width={350}
             videoConstraints={videoConstraints}
-          /> */}
-          <span className="border border-success">
+          />
           <MessageList messages={this.state.messages} />
-          {/* <MessageForm onMessageSend={function(){
-            this.handleNewMessage;
-            this.capture
-          }} /> */}
-          <MessageForm onMessageSend={this.handleNewMessage} />
+          <MessageForm onMessageSend={()=>{this.capture();this.handleNewMessage()}} />
           {/* <button onClick={this.capture}>Capture photo</button> */}
           {/* {imgg} */}
-          </span>
-        </div>
-        <div className="div-chart">
-          {emotionBarChart}
-        </div>
         </div>
       );
     }
@@ -225,17 +170,14 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
 
-  startAddEmotion: (data)=> dispatch(startAddEmotion(data)),
-  receivedEmotion: (data)=>dispatch(receivedEmotion(data))
+  startAddEmotion: (data)=> dispatch(startAddEmotion(data))
+
 });
 
 const mapStateToProps = (state) => {
-  console.log("state",state);
   return {
     emotion: state.pureEmotion,
-    receivedEmotionState: state.receivedEmotion
-    
   };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(WebcamCapture);

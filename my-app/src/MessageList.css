@@ -1,0 +1,5 @@
+.MessageList {
+  overflow-y: auto;
+  overflow-x: auto;
+  padding: 4px;
+}

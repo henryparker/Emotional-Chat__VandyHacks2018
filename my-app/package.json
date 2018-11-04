@@ -7,9 +7,12 @@
     "fs-extra": "^7.0.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
     "react-scripts": "2.1.1",
     "react-webcam": "^1.0.4",
     "recordrtc": "^5.4.8",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

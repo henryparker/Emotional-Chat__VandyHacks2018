@@ -1,0 +1,84 @@
+//show result HTML + CSS
+
+<script src="https://unpkg.com/vue"></script>
+<style>
+.show-modal {
+    background-color: #DCEDC8;
+    color: #424242;
+    padding: 10px;
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 52px)
+  }
+.modal-template{
+  color: #76FF03;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.modal-container {
+  text-align: center;
+}
+</style>
+<script type="text/x-template" id="modal-template" >
+  <transition name="modal" >
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+          </div>
+
+          <div class="modal-body1">
+            <slot name="body1">
+            	emotion: angry
+            </slot>
+          </div>
+          
+          <div class="modal-body2">
+            <slot name="body2">
+              recording time: 66 seconds
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              scale: 9
+            </slot>
+          </div>
+          
+          <div class="modal-bottom">
+            <slot name="bottom-option1">
+          <button class="modal-default-button1" @click="$emit('close')">
+                save
+              </button>
+              <button class="modal-default-button2" @click="$emit('close')">
+                discard
+              </button>
+              </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<!-- app -->
+<div id="app">
+  <button class="show-modal" @click="showModal = true">Show Result</button>
+  <!-- use the modal component, pass in the prop -->
+  <modal v-if="showModal" @close="showModal = false">
+    <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+    <h3 slot="header">the person you just recorded was</h3>
+  </modal>
+</div>

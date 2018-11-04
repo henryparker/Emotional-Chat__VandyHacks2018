@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 import Webcam from 'react-webcam';
 import axios from 'axios';
+import { startAddEmotion } from "../actions/pureEmotion";
 const fs = require('fs');
 
 // var fs = require('fs');
@@ -21,15 +23,7 @@ class WebcamCapture extends Component {
       // imageSrc = new Buffer(imageSrc, "base64")
       console.log(imageSrc);
       this.setState({img : imageSrc})
-      let subscriptionKey = "f86b477ee92e432096018c52d9d952f0"
-      let uriBase = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect'
-      let params = {
-        "returnFaceId": "true",
-        "returnFaceLandmarks": "false",
-        "returnFaceAttributes":
-            "age,gender,headPose,smile,facialHair,glasses,emotion," +
-            "hair,makeup,occlusion,accessories,blur,exposure,noise"
-    };
+       this.props.startAddEmotion(imageSrc);
     function dataURItoBlob(dataURI) {
       // convert base64/URLEncoded data component to raw binary data held in a string
       var byteString;
@@ -49,17 +43,7 @@ class WebcamCapture extends Component {
   
       return new Blob([ia], {type:mimeString});
   }
-    let config = {
-      headers: {'Content-Type': 'application/octet-stream',
-                 'Ocp-Apim-Subscription-Key':'f86b477ee92e432096018c52d9d952f0' },
-      params : {'returnFaceId' : 'true',
-        'returnFaceLandmarks' : 'false',
-        'returnFaceAttributes' : 'age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise' },
-        
-      }
-      
     
-      axios.post(uriBase,imageSrc,config).then((res)=>console.log(res))
     };
    
     render() {
@@ -69,22 +53,35 @@ class WebcamCapture extends Component {
         facingMode: "user"
       
       };
-      let imgg = this.state.img != "" ? <img src={this.state.img}></img>:<span></span>;
+      // let imgg = this.state.img != "" ? <img src={this.state.img}></img>:<span></span>;
       return (
         <div>
           <Webcam
             audio={false}
-            height={350}
+            // height={350}
             ref={this.setRef}
             screenshotFormat="image/jpeg"
-            width={350}
+            // width={350}
             videoConstraints={videoConstraints}
           />
           <button onClick={this.capture}>Capture photo</button>
-          {imgg}
+          {/* {imgg} */}
         </div>
       );
     }
   }
 
-export default WebcamCapture
+
+const mapDispatchToProps = (dispatch) => ({
+
+  startAddEmotion: (data)=> dispatch(startAddEmotion(data))
+
+});
+
+const mapStateToProps = (state) => {
+  return {
+    emotion: state.pureEmotion,
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(WebcamCapture);

@@ -1,1 +1,0 @@
-export const ADD_EMOTION = "ADD_EMOTION";

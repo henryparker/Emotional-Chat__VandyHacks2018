@@ -10,6 +10,7 @@ import { startAddEmotion } from "./actions/pureEmotion";
 import  {receivedEmotion}  from './actions/receivedEmotion';
 import _ from 'lodash';
 import {Bar, Radar, Polar} from 'react-chartjs-2';
+
 // var fs = require('fs');
 
 class App extends Component {
@@ -63,7 +64,7 @@ class App extends Component {
           channel.join().then(() => {
             this.addMessage({ body: `Joined general channel as ${this.state.username}` })
             window.addEventListener('beforeunload', () => channel.leave())
-          }).catch(() => reject(Error('Could not join general channel.')))
+          }).catch((e) => {reject(Error('Could not join general channel.')); console.log("e",e)})
 
           resolve(channel)
         }).catch(() => this.createGeneralChannel(chatClient))
@@ -73,11 +74,11 @@ class App extends Component {
 
   createGeneralChannel = (chatClient) => {
     return new Promise((resolve, reject) => {
-      this.addMessage({ body: 'Creating general channel...' })
+      this.addMessage({ body: 'Creating general channel...' });
       chatClient
-        .createChannel({ uniqueName: 'general', friendlyName: 'General Chat' })
+        .createChannel({ uniqueName:'general' , friendlyName: 'General Chat' })
         .then(() => this.joinGeneralChannel(chatClient))
-        .catch(() => reject(Error('Could not create general channel.')))
+        .catch((e) => console.log(e))
     })
   }
 

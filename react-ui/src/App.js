@@ -157,13 +157,13 @@ class App extends Component {
     render() {
       console.log("props",this.props);
       let emotionBarData = !_.isEmpty(this.props.receivedEmotionState) ?  {
-        labels: ["anger","contempt","disgust","fear","happiness","neutral","sadness"],
+        labels: ["anger","contempt","disgust","fear","happiness","neutral","sadness","surprise"],
         datasets: [{
             label:'percent',
             data: [this.props.receivedEmotionState.anger,this.props.receivedEmotionState.contempt,
               this.props.receivedEmotionState.disgust,this.props.receivedEmotionState.fear,
               this.props.receivedEmotionState.happiness,this.props.receivedEmotionState.neutral,
-              this.props.receivedEmotionState.sadness],
+              this.props.receivedEmotionState.sadness,this.props.receivedEmotionState.sadness],
             backgroundColor: 'rgb(255,99,71)'
         }] } : {};
 

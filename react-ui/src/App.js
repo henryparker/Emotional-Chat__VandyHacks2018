@@ -163,7 +163,7 @@ class App extends Component {
             data: [this.props.receivedEmotionState.anger,this.props.receivedEmotionState.contempt,
               this.props.receivedEmotionState.disgust,this.props.receivedEmotionState.fear,
               this.props.receivedEmotionState.happiness,this.props.receivedEmotionState.neutral,
-              this.props.receivedEmotionState.sadness,this.props.receivedEmotionState.sadness],
+              this.props.receivedEmotionState.sadness,this.props.receivedEmotionState.surprise],
             backgroundColor: 'rgb(255,99,71)'
         }] } : {};
 

@@ -10,3 +10,11 @@ Our project includes a live camera to gather data regarding the user’s facial 
 
 <h1>How we built it</h1>
 We used Microsoft Face API to analyze users’ facial expression. We also use Twilio Chat API for creating real-time messaging feature. For the front end development, we use React and Redux.
+<h1>Frameworks:</h1> 
+<ul>
+<li><h3>FrontEnd: React , Redux</h3></li>
+
+<li><h3>Runtime-server: Node.JS</h3></li>
+
+<li><h3>API: Twilio & FaceAPI </h3></li>
+</ul>

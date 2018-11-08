@@ -1,4 +1,4 @@
-
+![Image not working](http://g.recordit.co/FSyqNLyTEm.gif)
 URL: https://vandy-emotion-message.herokuapp.com/
 
 <h1>Inspiration</h1>

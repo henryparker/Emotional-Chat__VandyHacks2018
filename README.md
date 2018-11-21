@@ -1,6 +1,7 @@
+
 ![Image not working](http://g.recordit.co/FSyqNLyTEm.gif)
 URL: https://vandy-emotion-message.herokuapp.com/
-
+<p>NOTE: Face API KEY currently expired but Texting functionality still works</p>
 <h1>Inspiration</h1>
 Users can use emojis to express their emotions and thoughts, such as the “reaction” feature on Facebook. But such emoji-dependent picture icons rarely represent the users’ feelings accurately and precisely. Further, even the users themselves cannot put their feelings into words promptly all the time. After identifying this limitation of general online chatting, we decided to develop a chatting app that can deeply analyze the users’ emotion when they are messaging their friends.
 
